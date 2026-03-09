@@ -46,6 +46,6 @@ A simple rest API is provided to make predictions based on the trained decision 
 
 The decision tree is implemented from scratch in Go, without using any external machine learning libraries. The training process involves calculating the Gini impurity to find the best splits for the data and recursively building the tree until a stopping condition is met (e.g., maximum depth or pure node).
 
-The model is trained on a sample dataset (not included in the repository) and can be easily modified to use different datasets or features by changing the data parsing and training logic.
+The model is trained on a sample dataset and can be easily modified to use different datasets or features by changing the data parsing and training logic.
 
 ## Note: This is a proof of concept and is not optimized for performance or accuracy. It is intended for educational purposes and will not be suitable for production use without further enhancements and very extensive testing.
