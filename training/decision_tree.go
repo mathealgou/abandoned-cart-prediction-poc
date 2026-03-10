@@ -206,14 +206,16 @@ func PerClassAccuracy(tree *Node, samples []map[string]float64, labels []string)
 	}
 }
 
+var leafCount int = 0
+
 func PrintTree(n *Node, indent string) {
 	if n.IsLeaf {
-		fmt.Printf("%s→ predict: %s\n", indent, n.Prediction)
+		// fmt.Printf("%s→ predict: %s\n", indent, n.Prediction)
+		// clear the line and print the leaf count
+		fmt.Printf("\rleafCount: %d", leafCount)
+		leafCount++
 		return
 	}
-	fmt.Printf("%s[%s <= %.2f]\n", indent, n.Feature, n.Threshold)
-	fmt.Printf("%sLEFT:\n", indent)
 	PrintTree(n.Left, indent+"  ")
-	fmt.Printf("%sRIGHT:\n", indent)
 	PrintTree(n.Right, indent+"  ")
 }

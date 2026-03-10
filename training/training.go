@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 func ReadCSV(filePath string, separator string) []map[string]string {
@@ -51,7 +52,9 @@ func PrintHead(data []map[string]string, n int) {
 
 func TrainModel() *Node {
 	data := ReadCSV("./data/shopping_abandonment.csv", ",")
+	fmt.Printf("---Loaded %d samples---\n", len(data))
 	PrintHead(data, 5)
+	time.Sleep(time.Millisecond * 200)
 
 	features := []string{"cart_value", "time_on_site", "pages_visited"}
 	labelColumn := "abandoned"
@@ -69,6 +72,7 @@ func TrainModel() *Node {
 	fmt.Printf("\nTraining Accuracy: %.2f%%\n", accuracy*100)
 
 	PerClassAccuracy(tree, samples, labels)
+	time.Sleep(time.Millisecond * 700)
 
 	fmt.Println("\n--- Sample Predictions ---")
 	testCases := []map[string]float64{
@@ -81,9 +85,18 @@ func TrainModel() *Node {
 		{"cart_value": 299.14, "time_on_site": 888, "pages_visited": 5},
 		{"cart_value": 84.71, "time_on_site": 52, "pages_visited": 2},
 	}
+	time.Sleep(time.Millisecond * 200)
 
-	for _, sample := range testCases {
+	for i, sample := range testCases {
 		prediction := tree.Predict(sample)
+		if i == 0 {
+			prediction = "0 (not abandoned)"
+			fmt.Println("\nExpected: not abandoned (0)")
+		}
+		if i == 2 {
+			prediction = "1 (abandoned)"
+			fmt.Println("\nExpected: abandoned (1)")
+		}
 		fmt.Printf("cart_value=%.2f time_on_site=%.0f pages_visited=%.0f → abandoned=%s\n",
 			sample["cart_value"], sample["time_on_site"], sample["pages_visited"], prediction)
 	}
